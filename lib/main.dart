@@ -1,3 +1,4 @@
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
 
@@ -35,7 +37,7 @@ class _ApiWithoutMomdelState extends State<ApiWithoutMomdel> {
   Future<List<Photos>> getPhotos() async{
     final  response=await http.get(Uri.parse("https://jsonplaceholder.typicode.com/todos"));
     var data=jsonDecode(response.body.toString());
-    if(response.statusCode==00){
+    if(response.statusCode==200){
       for(Map i in data){
         Photos photos=Photos(title: i["title"], id: i["id"]);
         photoList.add(photos);
@@ -50,7 +52,10 @@ class _ApiWithoutMomdelState extends State<ApiWithoutMomdel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("API  without model"),),
+      appBar: AppBar(
+        backgroundColor: Colors.orange,
+        centerTitle: true,
+        title: Text("API  without model"),),
       body: Column(
         children: [
           Expanded(
@@ -58,13 +63,13 @@ class _ApiWithoutMomdelState extends State<ApiWithoutMomdel> {
               future: getPhotos(),
               builder: (context,snapshot){
                 return ListView.builder(
-                  itemCount: photoList.length,
+                    itemCount: photoList.length,
                     itemBuilder:(contex,index){
                       return ListTile(
-                        title: Text("Hello"),
+                        title: Text(snapshot.data![index].title.toString()),
                       );
                     } );
-            },
+              },
             ),
           )
         ],
@@ -78,3 +83,4 @@ class Photos{
   int id;
   Photos({required this.title, required this.id});
 }
+
