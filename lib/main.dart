@@ -53,7 +53,6 @@ class _ApiWithoutMomdelState extends State<ApiWithoutMomdel> {
       appBar: AppBar(title: Text("API  without model"),),
       body: Column(
         children: [
-          Text("Hi"),
           Expanded(
             child: FutureBuilder(
               future: getPhotos(),
